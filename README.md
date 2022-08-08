@@ -18,6 +18,10 @@ Run the following command to install the necessary dependencies
 ```bash
 npm install
 ```
+To run the server, use:
+```bash
+npm run dev
+```
 
 ## Contributors
 The projects herein are undertaken and authored by [Promise Yehangane](https://github.com/nuel07)
