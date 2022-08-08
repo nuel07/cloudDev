@@ -4,13 +4,13 @@
 This repository is specifically dedicated to AWS cloud development projects undertaken during my cloud development program with Udacity.
 
 ## Contents
-* [basic_server](cloudDev/basic_server) - A basic server
-* [project1](cloudDev/project1) - Deploying static files to the cloud
-* [project2](cloudDev/project2) - Full stack application on the cloud
+* [basic_server](/basic_server) - A basic server
+* [project1](/project1) - Deploying static files to the cloud
+* [project2](/project2) - Full stack application on the cloud
 
 ## Technologies
 The projects in this repository are built with the following:
-###### `Javascript`
+###### **Javascript**
 ###### `Node.Js`
 ###### `Express.Js`
 ###### `Typescript`
