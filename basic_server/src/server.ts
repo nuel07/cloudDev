@@ -57,18 +57,18 @@ import { Car, cars as car_list } from './cars';
 
     //endpoint to GET specific car, should require id
     //fails gracefully with no id
-    app.get('/cars/:id', (req: Request, res:Response) => {
-        let {id} = req.params;
+    app.get("/cars/:id", (req: Request, res:Response) => {
+        let { id } = req.params;
         //check to make sure id is set
-        if (!id) {
+        if ( !id ) {
             //respond with an error if not
             return res.status(400).send(`id is required`);
         }
         //finding car by id
-        const car  = cars.filter((car) => car.id == id);
+        const car = cars.filter((car) => car.id == car.id);
         //respond with not found status code if no id is found
         if (car && cars.length === 0){
-            return res.status(401).send('Car not found');
+            return res.status(401).send(`Car not found`);
         }
         //else, return the car that matches the id
         res.status(200).send(car);
