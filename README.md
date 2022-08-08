@@ -10,10 +10,10 @@ This repository is specifically dedicated to AWS cloud development projects unde
 
 ## Technologies
 The projects in this repository are built with the following:
-** `Javascript`
-###### `Node.Js`
-###### `Express.Js`
-###### `Typescript`
+#### `Javascript`
+#### `Node.Js`
+#### `Express.Js`
+#### `Typescript`
 Run the following command to install the necessary dependencies
 ```bash
 npm install
