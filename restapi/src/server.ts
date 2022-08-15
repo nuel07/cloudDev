@@ -1,4 +1,4 @@
-import express from 'express';
+import  express, { Router, Request, Response } from 'express';
 import { sequelize } from './sequelize';
 
 import { IndexRouter } from './controllers/v0/index.router';
@@ -29,11 +29,10 @@ import { V0MODELS } from './controllers/v0/model.index';
   app.get( "/", async ( req, res ) => {
     res.send( "/api/v0/" );
   } );
-  
 
   // Start the Server
   app.listen( port, () => {
-      console.log( `server running http://localhost:${ port }` );
-      console.log( `press CTRL+C to stop server` );
-  } );
+    console.log( `server running http://localhost:${ port }` );
+    console.log( `press CTRL+C to stop server` );
+} );
 })();
