@@ -1,32 +1,33 @@
 import { Router, Request, Response } from 'express';
+
 import { User } from '../models/User';
 
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { NextFunction } from 'connect';
+
 import * as EmailValidator from 'email-validator';
 import { config } from '../../../../config/config';
-import { SSL_OP_NO_QUERY_MTU } from 'constants';
 
 const router: Router = Router();
 
-async function generatePassword(plainTextPassword: string): Promise<string>{
-    //@TODO Use Bcrypt to generate salted hashed password
+async function generatePassword(plainTextPassword: string): Promise<string> {
+    //@TODO Use Bcrypt to Generated Salted Hashed Passwords
     return "NotYetImplemented"
 }
 
-async function comparePasswords(plainTextPassword: string, hash: string): Promise<boolean>{
-    //@TODO Use Bcrypt to compare your password to your salted hashed password
+async function comparePasswords(plainTextPassword: string, hash: string): Promise<boolean> {
+    //@TODO Use Bcrypt to Compare your password to your Salted Hashed Password
     return true
 }
 
-function generateJWT(user: User): string{
-    //@TODO use jwt to create a new JWT payload
-    return jwt.sign(user.toJSON(), config.jwt.secrets);
+function generateJWT(user: User): string {
+    //@TODO Use jwt to create a new JWT Payload containing
+    return jwt.sign(user.toJSON(), config.jwt.secret);
 }
 
-export function requireAuth(req: Request, res: Response, next: NextFunction){
-    console.warn("auth.router not yet implemented, to be covered in next lessons ");
+export function requireAuth(req: Request, res: Response, next: NextFunction) {
+    console.warn("auth.router not yet implemented, you'll cover this in lesson 5")
     return next();
     // if (!req.headers || !req.headers.authorization){
     //     return res.status(401).send({ message: 'No authorization headers.' });
@@ -48,36 +49,41 @@ export function requireAuth(req: Request, res: Response, next: NextFunction){
     // });
 }
 
-router.get('/verification', requireAuth, async(req: Request, res: Response) => {
-    return res.status(200).send({ auth: true, message: 'Authenticated'});
+router.get('/verification', 
+    requireAuth, 
+    async (req: Request, res: Response) => {
+        return res.status(200).send({ auth: true, message: 'Authenticated.' });
 });
 
-router.post('/login', async(req: Request, res: Response) => {
+router.post('/login', async (req: Request, res: Response) => {
     const email = req.body.email;
     const password = req.body.password;
-    //check email validity
-    if (!email || !EmailValidator.validate(email)){
-        return res.status(400).send({ auth: false, message: 'Email is required or is invalid'});
+    // check email is valid
+    if (!email || !EmailValidator.validate(email)) {
+        return res.status(400).send({ auth: false, message: 'Email is required or malformed' });
     }
-    //check email password validity
+
+    // check email password valid
     if (!password) {
-        return res.status(400).send({ auth: false, message: 'Password is required'});
+        return res.status(400).send({ auth: false, message: 'Password is required' });
     }
 
     const user = await User.findByPk(email);
-    //check that user exists
-    if(!user){
-        return res.status(401).send({ auth: false, message: 'Unauthorized'});
+    // check that user exists
+    if(!user) {
+        return res.status(401).send({ auth: false, message: 'Unauthorized' });
     }
 
-    //check that password matches
-    const authValid = await comparePasswords(password, user.password_hash);
-    if (!authValid) {
-        return res.status(401).send({ auth: false, message: 'Unauthorized'});
+    // check that the password matches
+    const authValid = await comparePasswords(password, user.password_hash)
+
+    if(!authValid) {
+        return res.status(401).send({ auth: false, message: 'Unauthorized' });
     }
 
-    //Generate JWT
+    // Generate JWT
     const jwt = generateJWT(user);
+
     res.status(200).send({ auth: true, token: jwt, user: user.short()});
 });
 
